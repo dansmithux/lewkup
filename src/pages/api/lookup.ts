@@ -29,8 +29,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return;
 
     } catch (error) {
+      let msg = (error as Error).message;
       console.error(error);
-      return res.status(500).json({ message: error.message });
+      return res.status(500).json({ message: msg });
     }
   } else {
     // If the request is not a POST, return method not allowed

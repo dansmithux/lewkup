@@ -9,7 +9,7 @@ import './global.css'
 export const metadata: Metadata = {
   title: 'LewkApp',
   description: "Quickly and easily figure out who's texting you",
-  favicon: "../../public/favicon.ico"
+  icons: { icon: "../../public/favicon.ico" }
 }
 
 const RootLayout = (props: PropsWithChildren) => {

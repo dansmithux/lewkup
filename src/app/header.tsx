@@ -1,6 +1,5 @@
 import MainMenu from './menu'
 import Balance from './balance'
-import ThemeToggle from './theme-toggle';
 import ThemeSwitch from './theme-switch';
 
 const Header = () => {
@@ -15,14 +14,12 @@ const Header = () => {
   					</div>
   					
   					<div className="flex items-center">
-  						<ThemeSwitch
-  							className="px-4"
-  						/>
+  						<ThemeSwitch />
   						<Balance
   							className="mx-4"
   						/>
 						<MainMenu
-							size="xl"
+							size="lg"
 						/>
   					</div>
 				</div>
