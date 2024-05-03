@@ -1,7 +1,6 @@
-"use client";
-
 import { useState } from 'react';
 import { PatternFormat } from 'react-number-format';
+import LookupResultDisplay from './result';
 
 // `phoneNumber` will be the parsed phone number in E.164 format. Example: "+12133734253".
 function PhoneNumberSearch() {
@@ -43,7 +42,6 @@ function PhoneNumberSearch() {
         setLookupResult(null); // Handle error
       } else {
         setLookupResult(data); // Update state with the fetched data
-        console.log('Lookup result:', data);
       }
     });
   };
@@ -73,16 +71,15 @@ function PhoneNumberSearch() {
               type="tel"
             />
             <button
-                className="dark text-xl font-bold px-4 py-2 ml-3 border rounded shadow"
+                className="text-2xl font-bold px-4 py-2 ml-3 border rounded shadow align-top"
                 type="submit"
             >
               Search
             </button>
           </form>
         </div>
-        <div className="">
-          {lookupResult && <pre>{JSON.stringify(lookupResult, null, 2)}</pre>}
-        </div>
+        <LookupResultDisplay result={lookupResult} />
+
     </>
   )
 }

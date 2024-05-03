@@ -8,7 +8,7 @@ import './global.css'
 
 export const metadata: Metadata = {
   title: 'LewkApp',
-  description: "Quickly and easily figure out who's texting you",
+  description: "Quickly and easily discover out who's texting you",
   icons: { icon: "../../public/favicon.ico" }
 }
 
@@ -18,9 +18,12 @@ const RootLayout = (props: PropsWithChildren) => {
     <html lang="en" suppressHydrationWarning>
       <body className="bg-canvas dark:bg-dark text-dark dark:text-light">
         <ThemeProvider attribute="class">
-          <div className="container mx-auto h-screen flex flex-col justify-center items-center">
+          <div className="container mx-auto">
             <Header />
-            {children}
+            <div className="h-screen flex flex-col justify-center items-center">
+              {children}
+            </div>
+
           </div>
         </ThemeProvider>
       </body>

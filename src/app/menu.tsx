@@ -19,7 +19,6 @@ import {
   MoonIcon
 } from 'lucide-react'
 
-
 const MainMenu = (props: Menu.RootProps) => {
   const router = useRouter()
 
@@ -33,7 +32,7 @@ const MainMenu = (props: Menu.RootProps) => {
       <Menu.Positioner>
         <Menu.Content>
           <Menu.ItemGroup id="group-1">
-            <Menu.Item id="search" onClick={() => router.push('/search')}>
+            <Menu.Item id="search" onClick={() => router.push('/')}>
               <SearchIcon className="mr-2" />
                 New search
             </Menu.Item>
