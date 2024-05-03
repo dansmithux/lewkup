@@ -58,7 +58,7 @@ function PhoneNumberSearch() {
   return (
     <>
         <div className="flex justify-center items-center space-x-3">
-          <form onSubmit={handleSearch}>
+          <form onSubmit={handleSearch} autoComplete="off">
 
             <PatternFormat
               allowEmptyFormatting
