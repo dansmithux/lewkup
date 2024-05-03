@@ -39,7 +39,7 @@ const LookupResultDisplay = ({ result }) => {
         <strong>{result.lineTypeIntelligence?.carrier_name || "Unknown"}</strong>
         
         <h2 className="mt-4">Line Type</h2>
-        <strong>{toNameCase(result.lineTypeIntelligence?.type) || "Unknown"}</strong>
+        <strong>{result.lineTypeIntelligence?.type || "Unknown"}</strong>
 
     </div>
   );
