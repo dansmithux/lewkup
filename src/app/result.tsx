@@ -34,9 +34,9 @@ function downloadVCard(contact) {
   link.click();
 }
 
-const PhoneLink = ({ phoneNumber, type }) => {
+const PhoneLink = ({ phoneNumber, formattedNumber, type }) => {
   return (
-      <a className="block text-md font-semibold px-4 py-2 border rounded w-full mt-3 text-center" href={`${type}:${phoneNumber}`}>{ type === "tel" ? "Call" : "Message"} {phoneNumber}</a>
+      <a className="block text-md font-semibold px-4 py-2 border rounded w-full mt-3 text-center" href={`${type}:${phoneNumber}`}>{ type === "tel" ? "Call" : "Message"} {formattedNumber}</a>
   );
 };
 
@@ -78,6 +78,7 @@ const LookupResultDisplay = ({ result }) => {
 
   if (!result.valid) return (<h2 className="mt-12 text-2xl"><span className="font-bold">{result.phoneNumber}</span> doesn't seem to be valid. Please a different number.</h2>)
 
+  const phoneNumber = result.phoneNumber;
   const formattedNumber = result.nationalFormat;
   const callerName = toNameCase(result.callerName?.caller_name) || "Unknown";
   const callerType = toNameCase(result.callerName?.caller_type) || "Unknown";
@@ -113,11 +114,11 @@ const LookupResultDisplay = ({ result }) => {
           </div>
 
           <div className="">
-              <button className="block text-md font-semibold px-4 py-2 border rounded w-full text-center" onClick={() => downloadVCard({ name: callerName , phone: result.phoneNumber })}>
+              <button className="block text-md font-semibold px-4 py-2 border rounded w-full text-center" onClick={() => downloadVCard({ name: callerName , phone: phoneNumber })}>
                 Save to Contacts
               </button>
-              <PhoneLink phoneNumber={formattedNumber} type="tel" />
-              <PhoneLink phoneNumber={formattedNumber} type="sms" />
+              <PhoneLink phoneNumber={phoneNumber} formattedNumber={formattedNumber} type="tel" />
+              <PhoneLink phoneNumber={phoneNumber} formattedNumber={formattedNumber} type="sms" />
           </div>
 
         </div>
