@@ -68,7 +68,7 @@ function PhoneNumberSearch() {
 
             <PatternFormat
               allowEmptyFormatting
-              className="text-2xl px-4 py-2 border rounded w-full md:w-auto text-center"
+              className="text-2xl px-4 py-2 border shadow w-full md:w-auto text-center rounded"
               format="+1 (###) ###-####"
               mask="_"
               value={phoneNumber}
@@ -78,7 +78,7 @@ function PhoneNumberSearch() {
               getInputRef={searchInputRef}
             />
             <button
-                className="text-2xl font-semibold px-4 py-2 border rounded-md align-top w-full md:w-auto"
+                className="bg-green-600 hover:bg-green-700 text-white text-2xl font-semibold px-4 py-2 border shadow w-full md:w-auto rounded"
                 type="submit"
             >
               Search

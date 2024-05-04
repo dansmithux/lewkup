@@ -1,5 +1,12 @@
 import React from 'react';
 
+import {
+  PhoneCallIcon,
+  ContactIcon,
+  MessageSquareTextIcon
+} from 'lucide-react'
+
+
 function toNameCase(str) {
   if (!!str) {
     return str.replace(/([^\W_]+[^\s-]*) */g, function(txt) {
@@ -36,7 +43,13 @@ function downloadVCard(contact) {
 
 const PhoneLink = ({ phoneNumber, formattedNumber, type }) => {
   return (
-      <a className="block text-md font-semibold px-4 py-2 border rounded w-full mt-3 text-center" href={`${type}:${phoneNumber}`}>{ type === "tel" ? "Call" : "Message"} {formattedNumber}</a>
+      <a className="bg-green-600 hover:bg-green-700 text-white text-md font-medium px-4 py-2 border rounded w-full mt-3 flex" href={`${type}:${phoneNumber}`}>
+        { type === "tel"
+          ? <PhoneCallIcon className="mr-2" />
+          : <MessageSquareTextIcon className="mr-2" />
+        }
+        { type === "tel" ? "Call" : "Message"} {formattedNumber}
+      </a>
   );
 };
 
@@ -89,7 +102,7 @@ const LookupResultDisplay = ({ result }) => {
 
   return (
     <>
-      <div className="mt-12 max-w-4xl">
+      <div className="my-12 max-w-4xl border p-6 rounded shadow-lg">
 
         <div className="flex flex-col sm:flex-row gap-6 sm:gap-12 md:gap-18">
 
@@ -97,24 +110,25 @@ const LookupResultDisplay = ({ result }) => {
 
             <h2 className="text-3xl font-bold">{formattedNumber}</h2>
 
-            <h2 className="font-light mt-4">Caller Name</h2>
+            <h2 className="font-light mt-4 uppercase">Caller Name</h2>
             <h3 className="text-2xl">{callerName}</h3>
             
-            <h2 className="font-light mt-4">Caller Type</h2>
+            <h2 className="font-light mt-4 uppercase">Caller Type</h2>
             <h3 className="text-2xl">{callerType}</h3>
             
 
-            <h2 className="font-light mt-4">Carrier Name</h2>
+            <h2 className="font-light mt-4 uppercase">Carrier Name</h2>
             <h3 className="text-2xl">{carrierName}</h3>
             
-            <h2 className="font-light mt-4">Line Type</h2>
+            <h2 className="font-light mt-4 uppercase">Line Type</h2>
             <h3 className="text-2xl">{lineType}</h3>
             <p className="sm:max-w-xs">{lineTypeDescription}</p>
 
           </div>
 
           <div className="">
-              <button className="block text-md font-semibold px-4 py-2 border rounded w-full text-center" onClick={() => downloadVCard({ name: callerName , phone: phoneNumber })}>
+              <button className="bg-green-600 hover:bg-green-700 text-white flex text-md font-medium px-4 py-2 border rounded w-full" onClick={() => downloadVCard({ name: callerName , phone: phoneNumber })}>
+                <ContactIcon className="mr-2" />
                 Save to Contacts
               </button>
               <PhoneLink phoneNumber={phoneNumber} formattedNumber={formattedNumber} type="tel" />
