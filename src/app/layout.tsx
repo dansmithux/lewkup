@@ -20,7 +20,7 @@ const RootLayout = (props: PropsWithChildren) => {
         <ThemeProvider attribute="class">
           <div className="container mx-auto">
             <Header />
-            <div className="h-screen flex flex-col justify-center items-center">
+            <div className="flex flex-col sm:justify-center sm:items-center pt-24 px-4">
               {children}
             </div>
 

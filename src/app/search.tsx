@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { PatternFormat } from 'react-number-format';
 import LookupResultDisplay from './result';
 
@@ -7,6 +7,7 @@ function PhoneNumberSearch() {
 
   const [phoneNumber, setPhoneNumber] = useState('');
   const [lookupResult, setLookupResult] = useState(null);
+  const searchInputRef = useRef<HTMLInputElement | null>(null);
 
  const fetchData = async (phoneNumber, callback) => {
     try {
@@ -35,6 +36,11 @@ function PhoneNumberSearch() {
     e.preventDefault();
     console.log(phoneNumber);
 
+    if (phoneNumber.length < 10) {
+      searchInputRef.current?.focus();
+      return;
+    }
+
     // Use the fetchData function with a callback to handle the result
     fetchData(phoneNumber, (err, data) => {
       if (err) {
@@ -42,6 +48,7 @@ function PhoneNumberSearch() {
         setLookupResult(null); // Handle error
       } else {
         setLookupResult(data); // Update state with the fetched data
+        setPhoneNumber('');
       }
     });
   };
@@ -54,24 +61,24 @@ function PhoneNumberSearch() {
   };
 
 
-
   return (
     <>
-        <div className="flex justify-center items-center space-x-3">
+        <div className="flex flex-col md:flex-row justify-center items-center ">
           <form onSubmit={handleSearch} autoComplete="off">
 
             <PatternFormat
               allowEmptyFormatting
-              className="text-2xl px-4 py-2 border rounded shadow"
+              className="text-2xl px-4 py-2 border rounded w-full md:w-auto text-center"
               format="+1 (###) ###-####"
               mask="_"
               value={phoneNumber}
               onValueChange={handlePhoneNumberChange}
               valueIsNumericString={true}
               type="tel"
+              getInputRef={searchInputRef}
             />
             <button
-                className="text-2xl font-bold px-4 py-2 ml-3 border rounded shadow align-top"
+                className="text-2xl font-semibold px-4 py-2 border rounded-md align-top w-full md:w-auto"
                 type="submit"
             >
               Search

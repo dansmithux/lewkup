@@ -6,7 +6,7 @@ const Balance = (props: BadgeProps) => {
   return (
   	<>
   		<Badge {...props} variant="solid">
-  			2 free credits left
+  			2 credits
 		</Badge>
   	</>
   )
