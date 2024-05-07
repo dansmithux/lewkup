@@ -26,9 +26,9 @@ const RootLayout = (props: PropsWithChildren) => {
     <html lang="en" className={noto.className} suppressHydrationWarning>
       <body className="bg-canvas dark:bg-dark text-dark dark:text-light">
         <ThemeProvider attribute="class">
-          <div className="container mx-auto">
+          <div className="">
             <Header />
-            <div className="flex flex-col sm:justify-center sm:items-center pt-24 px-4">
+            <div className="flex flex-col sm:justify-center sm:items-center pt-32 px-4">
               {children}
             </div>
 

@@ -1,15 +1,18 @@
-import { Badge, type BadgeProps } from '~/components/ui/badge'
+"use client";
 
+import { Button, ButtonProps } from '~/components/ui/button';
+import { useRouter } from 'next/navigation';
 
-const Balance = (props: BadgeProps) => {
+const Balance = (props: ButtonProps) => {
+    const router = useRouter();
 
-  return (
-  	<>
-  		<Badge {...props} variant="solid">
-  			2 credits
-		</Badge>
-  	</>
-  )
+    return (
+        <>
+            <Button variant="ghost" size="xs" className="rounded-full" onClick={() => router.push('/buy')}>
+                2 credits
+            </Button>
+        </>
+    )
 	
 }
 

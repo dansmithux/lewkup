@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model User {
+  id            Int                @id @default(autoincrement())
+  phoneNumber   String             @unique
+  signupDate    DateTime           @default(now())
+  credits       Credits[]
+  OTPs          OTP[]
+  searches      SearchHistory[]
+  creditBalance UserCreditBalance?
+}
+
+model OTP {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  otpCode   String
+  expiry    DateTime
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model SearchHistory {
+  id                Int      @id @default(autoincrement())
+  userId            Int
+  phoneNumber       String
+  formattedNumber   String
+  callerName        String
+  callerType        String
+  carrierName       String
+  lineTypeId        String
+  valid             Boolean  @default(false)
+  searchTimestamp   DateTime @default(now())
+  user              User     @relation(fields: [userId], references: [id])
+}
+
+model Credits {
+  id           Int      @id @default(autoincrement())
+  userId       Int
+  credits      Int
+  purchaseDate DateTime @default(now())
+  user         User     @relation(fields: [userId], references: [id])
+}
+
+model UserCreditBalance {
+  userId  Int  @id
+  balance Int  @default(0)
+  user    User @relation(fields: [userId], references: [id])
+}

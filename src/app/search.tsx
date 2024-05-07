@@ -78,7 +78,7 @@ function PhoneNumberSearch() {
               getInputRef={searchInputRef}
             />
             <button
-                className="bg-green-600 hover:bg-green-700 text-white text-2xl font-semibold px-4 py-2 border shadow w-full md:w-auto rounded"
+                className="bg-green-600 hover:bg-green-700 text-white text-2xl font-medium px-4 py-2 border shadow w-full md:w-auto rounded"
                 type="submit"
             >
               Search

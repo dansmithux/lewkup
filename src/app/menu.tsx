@@ -16,7 +16,8 @@ import {
   CirclePlusIcon,
   SunMoonIcon,
   SunIcon,
-  MoonIcon
+  MoonIcon,
+  HistoryIcon
 } from 'lucide-react'
 
 const MainMenu = (props: Menu.RootProps) => {
@@ -25,15 +26,21 @@ const MainMenu = (props: Menu.RootProps) => {
   return (
     <Menu.Root {...props}>
       <Menu.Trigger asChild>
-        <Button variant="outline" size={props.size}>
+        <Button variant="ghost" size={props.size}>
           <MenuIcon />
         </Button>
       </Menu.Trigger>
       <Menu.Positioner>
         <Menu.Content>
           <Menu.ItemGroup id="group-1">
+            <Menu.Item id="search" onClick={() => router.push('/')}>
+              <SearchIcon className="mr-2" /> Search
+            </Menu.Item>
+            <Menu.Item id="history" onClick={() => router.push('/history')}>
+              <HistoryIcon className="mr-2" /> History
+            </Menu.Item>
             <Menu.Item id="buy" onClick={() => router.push('/buy')}>
-              <CirclePlusIcon className="mr-2" /> Buy more credits
+              <CirclePlusIcon className="mr-2" /> Buy credits
             </Menu.Item>
             <Menu.Separator />
             <Menu.Item id="logout" onClick={() => router.push('/login')}>
