@@ -1,16 +1,22 @@
+'use client';
+
 import MainMenu from './menu'
 import Balance from './balance'
 import ThemeSwitch from './theme-switch';
+import { useRouter } from 'next/navigation'
+import { Button } from '~/components/ui/button'
 
 const Header = () => {
+	const router = useRouter()
 	return (
 		<>
-			<div className="w-full fixed top-0">
-				<div className="flex items-center justify-between p-4">
+			<div id="nav-blur" className="w-full fixed top-0 shadow-md border-b border-neutral-300 dark:border-neutral-700 backdrop-blur-md bg-white/30 dark:bg-black/30">
+				<div className="flex items-center justify-between p-4 sm:w-full max-w-6xl mx-auto">
   					<div className="min-w-0">
-    					<h2 className="text-xl font-bold leading-7 sm:text-2xl">
-      						<a href="/">LewkApp</a>
-    					</h2>
+
+	  					<Button variant="ghost" size="lg" className="text-lg" onClick={() => router.push('/')}>
+	          				WhoDis
+	        			</Button>
   					</div>
   					
   					<div className="flex items-center">

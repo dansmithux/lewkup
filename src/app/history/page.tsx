@@ -2,7 +2,7 @@
 
 // /history/page.tsx
 import { useEffect, useState } from 'react';
-import { PhoneCallIcon, ContactIcon, MessageSquareTextIcon } from 'lucide-react';
+import { PhoneCallIcon, ContactIcon, MessageSquareTextIcon, LoaderCircleIcon } from 'lucide-react';
 
 type SearchHistory = {
   id: number;
@@ -35,7 +35,7 @@ function downloadVCard(contact) {
 
 const PhoneLink = ({ phoneNumber, formattedNumber, type }) => {
   return (
-    <a className="mt-2 bg-green-600 hover:bg-green-700 text-white flex text-md font-medium px-4 py-2 border rounded w-full" href={`${type}:${phoneNumber}`}>
+    <a className="mt-2 bg-green-600 hover:bg-green-700 text-white flex text-md font-medium px-4 py-2 border w-full" href={`${type}:${phoneNumber}`}>
       { type === "tel"
         ? <PhoneCallIcon className="mr-2" />
         : <MessageSquareTextIcon className="mr-2" />
@@ -101,7 +101,9 @@ export default function HistoryPage() {
   }, []);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return (
+        <LoaderCircleIcon className="animate-spin h-10 w-10 text-green-600" />
+    );
   }
 
   if (error) {
@@ -136,7 +138,7 @@ export default function HistoryPage() {
               </div>
 
               <div className="sm:w-1/2">
-                <button className="bg-green-600 hover:bg-green-700 text-white flex text-md font-medium px-4 py-2 border rounded w-full" onClick={() => downloadVCard({ name: entry.callerName , phone: entry.phoneNumber })}>
+                <button className="bg-green-600 hover:bg-green-700 text-white flex text-md font-medium px-4 py-2 border w-full" onClick={() => downloadVCard({ name: entry.callerName , phone: entry.phoneNumber })}>
                   <ContactIcon className="mr-2" />
                   Save to Contacts
                 </button>

@@ -9,5 +9,6 @@ const config: Config = {
     grayColor: 'neutral',
     borderRadius: 'md',
   },
+  darkMode: 'class'
 }
 export default config

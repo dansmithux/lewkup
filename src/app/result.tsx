@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { PhoneCallIcon, ContactIcon, MessageSquareTextIcon } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { PhoneCallIcon, ContactIcon, MessageSquareTextIcon, LoaderCircleIcon } from 'lucide-react';
 
 function toNameCase(str) {
   if (!!str) {
@@ -34,7 +34,7 @@ function downloadVCard(contact) {
 
 const PhoneLink = ({ phoneNumber, formattedNumber, type }) => {
   return (
-    <a className="bg-green-600 hover:bg-green-700 text-white text-md font-medium px-4 py-2 border rounded w-full mt-3 flex" href={`${type}:${phoneNumber}`}>
+    <a className="bg-green-600 hover:bg-green-700 text-white text-md font-medium px-4 py-2 border w-full mt-3 flex" href={`${type}:${phoneNumber}`}>
       { type === "tel"
         ? <PhoneCallIcon className="mr-2" />
         : <MessageSquareTextIcon className="mr-2" />
@@ -75,9 +75,11 @@ const lineTypeDescriptions = {
 }
 
 const LookupResultDisplay = ({ result }) => {
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const saveToDatabase = async () => {
       if (result && result.valid) {
+
         const phoneNumber = result.phoneNumber;
         const formattedNumber = result.nationalFormat;
         const callerName = toNameCase(result.callerName?.caller_name) || "Unknown";
@@ -104,6 +106,8 @@ const LookupResultDisplay = ({ result }) => {
           });
         } catch (error) {
           console.error('Failed to save search history:', error);
+        }  finally {
+          setLoading(false);
         }
       }
     };
@@ -114,6 +118,10 @@ const LookupResultDisplay = ({ result }) => {
   if (!result) return null;
 
   if (!result.valid) return (<h2 className="mt-12 text-2xl"><span className="font-bold">{result.phoneNumber}</span> doesn't seem to be valid. Please try a different number.</h2>);
+
+  if (loading) {
+    return (<LoaderCircleIcon className="animate-spin h-10 w-10 text-green-600 mt-12" />);
+  }
 
   const phoneNumber = result.phoneNumber;
   const formattedNumber = result.nationalFormat;
@@ -147,7 +155,7 @@ const LookupResultDisplay = ({ result }) => {
           </div>
 
           <div className="sm:w-1/2">
-              <button className="bg-green-600 hover:bg-green-700 text-white flex text-md font-medium px-4 py-2 border rounded w-full" onClick={() => downloadVCard({ name: callerName , phone: phoneNumber })}>
+              <button className="bg-green-600 hover:bg-green-700 text-white flex text-md font-medium px-4 py-2 border w-full" onClick={() => downloadVCard({ name: callerName , phone: phoneNumber })}>
                 <ContactIcon className="mr-2" />
                 Save to Contacts
               </button>

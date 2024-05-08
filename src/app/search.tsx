@@ -60,6 +60,16 @@ function PhoneNumberSearch() {
     setPhoneNumber(value);
   };
 
+  const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    let paste = event.clipboardData.getData('text');
+    paste = paste.replace(/\D+/g, ''); // Remove non-digits
+    if (paste.startsWith('1')) {
+      paste = paste.substring(1); // Remove the leading '1' if present
+    }
+    let phoneNumber = paste;
+    setPhoneNumber(phoneNumber);
+  };
 
   return (
     <>
@@ -68,17 +78,18 @@ function PhoneNumberSearch() {
 
             <PatternFormat
               allowEmptyFormatting
-              className="text-2xl px-4 py-2 border shadow w-full md:w-auto text-center rounded"
+              className="text-2xl px-4 py-2 border shadow w-full md:w-auto text-center"
               format="+1 (###) ###-####"
               mask="_"
               value={phoneNumber}
               onValueChange={handlePhoneNumberChange}
+              onPaste={handlePaste}
               valueIsNumericString={true}
               type="tel"
               getInputRef={searchInputRef}
             />
             <button
-                className="bg-green-600 hover:bg-green-700 text-white text-2xl font-medium px-4 py-2 border shadow w-full md:w-auto rounded"
+                className="bg-green-600 hover:bg-green-700 text-white text-2xl font-medium px-4 py-2 border shadow w-full md:w-auto"
                 type="submit"
             >
               Search
