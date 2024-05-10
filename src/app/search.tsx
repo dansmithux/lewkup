@@ -73,12 +73,12 @@ function PhoneNumberSearch() {
 
   return (
     <>
-        <div className="flex flex-col md:flex-row justify-center items-center ">
+        <div className="flex flex-col md:flex-row justify-center items-center">
           <form onSubmit={handleSearch} autoComplete="off">
 
             <PatternFormat
               allowEmptyFormatting
-              className="text-2xl px-4 py-2 border shadow w-full md:w-auto text-center"
+              className="text-3xl px-2 py-3 shadow-md border dark:border-neutral w-full md:w-auto text-center"
               format="+1 (###) ###-####"
               mask="_"
               value={phoneNumber}
@@ -89,7 +89,7 @@ function PhoneNumberSearch() {
               getInputRef={searchInputRef}
             />
             <button
-                className="bg-green-600 hover:bg-green-700 text-white text-2xl font-medium px-4 py-2 border shadow w-full md:w-auto"
+                className="bg-green-600 hover:bg-green-700 border border-neutral text-white text-3xl font-medium px-5 py-3 shadow-md w-full md:w-auto"
                 type="submit"
             >
               Search

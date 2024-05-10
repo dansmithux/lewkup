@@ -32,18 +32,6 @@ function downloadVCard(contact) {
   link.click();
 }
 
-const PhoneLink = ({ phoneNumber, formattedNumber, type }) => {
-  return (
-    <a className="bg-green-600 hover:bg-green-700 text-white text-md font-medium px-4 py-2 border w-full mt-3 flex" href={`${type}:${phoneNumber}`}>
-      { type === "tel"
-        ? <PhoneCallIcon className="mr-2" />
-        : <MessageSquareTextIcon className="mr-2" />
-      }
-      { type === "tel" ? "Call" : "Message"} {formattedNumber}
-    </a>
-  );
-};
-
 const lineTypes = {
   landline : "Landline",
   mobile : "Mobile",
@@ -120,7 +108,15 @@ const LookupResultDisplay = ({ result }) => {
   if (!result.valid) return (<h2 className="mt-12 text-2xl"><span className="font-bold">{result.phoneNumber}</span> doesn't seem to be valid. Please try a different number.</h2>);
 
   if (loading) {
-    return (<LoaderCircleIcon className="animate-spin h-10 w-10 text-green-600 mt-12" />);
+    return (
+      <>
+        <div className="sm:w-full max-w-4xl">
+          <div className="flex justify-center">
+            <LoaderCircleIcon className="flex animate-spin h-10 w-10 text-green-600 mt-12" />
+          </div>
+        </div>
+      </>
+    );
   }
 
   const phoneNumber = result.phoneNumber;
@@ -133,9 +129,23 @@ const LookupResultDisplay = ({ result }) => {
   const lineType = lineTypes[lineTypeId];
   const lineTypeDescription = lineTypeDescriptions[lineTypeId];
 
+  const sharedButtonClasses = "border-1 border-neutral-200 hover:border-neutral-900 dark:border-neutral-800 dark:hover:border-neutral-100 text-dark text-md font-medium px-4 py-3 border w-full flex"
+
+  const PhoneLink = ({ phoneNumber, formattedNumber, type }) => {
+    return (
+      <a className={`${sharedButtonClasses} + mt-4`} href={`${type}:${phoneNumber}`}>
+        { type === "tel"
+          ? <PhoneCallIcon className="mr-2" />
+          : <MessageSquareTextIcon className="mr-2" />
+        }
+        { type === "tel" ? "Call" : "Message"} {formattedNumber}
+      </a>
+    );
+  };
+
   return (
     <>
-      <div className="my-12 border p-6 rounded-lg shadow-lg sm:w-full max-w-4xl">
+      <div className="my-16 border p-6 rounded-lg shadow-lg sm:w-full max-w-4xl">
         <div className="flex flex-col sm:flex-row gap-6 sm:gap-12 md:gap-18 w-full">
           <div className="sm:w-1/2">
             <h2 className="text-3xl font-bold">{formattedNumber}</h2>
@@ -155,7 +165,7 @@ const LookupResultDisplay = ({ result }) => {
           </div>
 
           <div className="sm:w-1/2">
-              <button className="bg-green-600 hover:bg-green-700 text-white flex text-md font-medium px-4 py-2 border w-full" onClick={() => downloadVCard({ name: callerName , phone: phoneNumber })}>
+              <button className={`${sharedButtonClasses}`} onClick={() => downloadVCard({ name: callerName , phone: phoneNumber })}>
                 <ContactIcon className="mr-2" />
                 Save to Contacts
               </button>

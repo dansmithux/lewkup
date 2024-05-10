@@ -33,18 +33,6 @@ function downloadVCard(contact) {
   link.click();
 }
 
-const PhoneLink = ({ phoneNumber, formattedNumber, type }) => {
-  return (
-    <a className="mt-2 bg-green-600 hover:bg-green-700 text-white flex text-md font-medium px-4 py-2 border w-full" href={`${type}:${phoneNumber}`}>
-      { type === "tel"
-        ? <PhoneCallIcon className="mr-2" />
-        : <MessageSquareTextIcon className="mr-2" />
-      }
-      { type === "tel" ? "Call" : "Message"} {formattedNumber}
-    </a>
-  );
-};
-
 const lineTypes = {
   landline : "Landline",
   mobile : "Mobile",
@@ -102,7 +90,13 @@ export default function HistoryPage() {
 
   if (loading) {
     return (
-        <LoaderCircleIcon className="animate-spin h-10 w-10 text-green-600" />
+      <>
+        <div className="sm:w-full max-w-4xl">
+          <div className="flex justify-center">
+            <LoaderCircleIcon className="animate-spin h-10 w-10 text-green-600" />
+          </div>
+        </div>
+      </>
     );
   }
 
@@ -113,6 +107,21 @@ export default function HistoryPage() {
   if (searchHistory.length === 0) {
     return <p>You have no search history yet.</p>;
   }
+  
+  const sharedButtonClasses = "border-1 border-neutral-200 hover:border-neutral-900 dark:border-neutral-800 dark:hover:border-neutral-100 text-dark text-md font-medium px-4 py-3 border w-full flex"
+
+  const PhoneLink = ({ phoneNumber, formattedNumber, type }) => {
+    return (
+      <a className={`${sharedButtonClasses} + mt-4`} href={`${type}:${phoneNumber}`}>
+        { type === "tel"
+          ? <PhoneCallIcon className="mr-2" />
+          : <MessageSquareTextIcon className="mr-2" />
+        }
+        { type === "tel" ? "Call" : "Message"} {formattedNumber}
+      </a>
+    );
+  };
+
 
   return (
     <>
@@ -138,7 +147,7 @@ export default function HistoryPage() {
               </div>
 
               <div className="sm:w-1/2">
-                <button className="bg-green-600 hover:bg-green-700 text-white flex text-md font-medium px-4 py-2 border w-full" onClick={() => downloadVCard({ name: entry.callerName , phone: entry.phoneNumber })}>
+                <button className={`${sharedButtonClasses}`} onClick={() => downloadVCard({ name: entry.callerName , phone: entry.phoneNumber })}>
                   <ContactIcon className="mr-2" />
                   Save to Contacts
                 </button>

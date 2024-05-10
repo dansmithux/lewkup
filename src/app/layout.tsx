@@ -12,10 +12,10 @@ export const metadata: Metadata = {
   icons: { icon: "../../public/favicon.ico" }
 }
 
-import { Noto_Sans } from 'next/font/google'
+import { Libre_Franklin } from 'next/font/google'
  
 // If loading a variable font, you don't need to specify the font weight
-const noto = Noto_Sans({
+const noto = Libre_Franklin({
   subsets: ['latin'],
   display: 'swap'
 })
@@ -28,7 +28,7 @@ const RootLayout = (props: PropsWithChildren) => {
         <ThemeProvider attribute="class">
           <div className="">
             <Header />
-            <div className="flex flex-col sm:justify-center sm:items-center pt-32 px-4">
+            <div className="flex flex-col sm:justify-center sm:items-center pt-36 px-4">
               {children}
             </div>
 
