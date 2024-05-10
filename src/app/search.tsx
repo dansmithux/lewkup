@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
 import { PatternFormat } from 'react-number-format';
+import { Button } from '~/components/ui/button'
 import LookupResultDisplay from './result';
 
 // `phoneNumber` will be the parsed phone number in E.164 format. Example: "+12133734253".
@@ -78,7 +79,7 @@ function PhoneNumberSearch() {
 
             <PatternFormat
               allowEmptyFormatting
-              className="text-3xl px-2 py-3 shadow-md border dark:border-neutral w-full md:w-auto text-center"
+              className="input input--size_2xl flex text-center"
               format="+1 (###) ###-####"
               mask="_"
               value={phoneNumber}
@@ -88,12 +89,9 @@ function PhoneNumberSearch() {
               type="tel"
               getInputRef={searchInputRef}
             />
-            <button
-                className="bg-green-600 hover:bg-green-700 border border-neutral text-white text-3xl font-medium px-5 py-3 shadow-md w-full md:w-auto"
-                type="submit"
-            >
+            <Button variant="solid" size="2xl" className="w-full mt-2" type="submit">
               Search
-            </button>
+            </Button>
           </form>
         </div>
         <LookupResultDisplay result={lookupResult} />

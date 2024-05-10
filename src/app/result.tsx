@@ -3,13 +3,19 @@ import { PhoneCallIcon, ContactIcon, MessageSquareTextIcon, LoaderCircleIcon } f
 
 function toNameCase(str) {
   if (!!str) {
-    return str.replace(/([^\W_]+[^\s-]*) */g, function(txt) {
-      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-    }).replace(/(\b(?:Mc|Mac)[a-z]+)/g, function(macTxt) {
-      return macTxt.charAt(0).toUpperCase() + macTxt.substr(1,2).toLowerCase() + macTxt.substr(3).charAt(0).toUpperCase() + macTxt.substr(4);
-    }).replace(/(['’][a-z])/g, function(apostropheTxt) {
-      return apostropheTxt.toUpperCase();
-    });
+    return str
+      .replace(/([^\W_]+[^\s-]*) */g, function(txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+      })
+      .replace(/(\b(?:Mc|Mac)[a-z]+)/g, function(macTxt) {
+        return macTxt.charAt(0).toUpperCase() + macTxt.substr(1,2).toLowerCase() + macTxt.substr(3).charAt(0).toUpperCase() + macTxt.substr(4);
+      })
+      .replace(/(['’][a-z])/g, function(apostropheTxt) {
+        return apostropheTxt.toUpperCase();
+      })
+      .replace(/(\b[a-z]+),\s*([a-z]+)/gi, function(match, lastName, firstName) {
+        return lastName + ', ' + firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+      });
   } else {
     return str;
   }
