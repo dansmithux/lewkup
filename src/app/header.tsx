@@ -15,7 +15,7 @@ const Header = () => {
   					<div className="min-w-0">
 
 	  					<Button variant="ghost" size="lg" className="text-lg" onClick={() => router.push('/')}>
-	          				WhoDis
+	          				WhoDiss
 	        			</Button>
   					</div>
   					

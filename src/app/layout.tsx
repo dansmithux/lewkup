@@ -7,7 +7,7 @@ import Header from './header'
 import './global.css'
 
 export const metadata: Metadata = {
-  title: 'LewkApp',
+  title: 'WhoDiss',
   description: "Quickly and easily discover out who's texting you",
   icons: { icon: "../../public/favicon.ico" }
 }
