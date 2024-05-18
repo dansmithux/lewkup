@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { signIn, signOut, useSession } from 'next-auth/react';
 import { PhoneCallIcon, ContactIcon, MessageSquareTextIcon, LoaderCircleIcon } from 'lucide-react';
+
+
+
 
 function toNameCase(str) {
   if (!!str) {
@@ -69,11 +73,16 @@ const lineTypeDescriptions = {
 }
 
 const LookupResultDisplay = ({ result }) => {
+  const { data: session } = useSession();
   const [loading, setLoading] = useState(true);
+
+
+
   useEffect(() => {
     const saveToDatabase = async () => {
-      if (result && result.valid) {
+      if (result && result.valid && session) {
 
+        const userId = session?.user?.id;
         const phoneNumber = result.phoneNumber;
         const formattedNumber = result.nationalFormat;
         const callerName = toNameCase(result.callerName?.caller_name) || "Unknown";
@@ -82,13 +91,14 @@ const LookupResultDisplay = ({ result }) => {
         const lineTypeId = result.lineTypeIntelligence?.type;
 
         try {
+
           await fetch('/api/add-search-history', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              userId: 1, // Adjust this to the actual user ID
+              userId,
               phoneNumber,
               formattedNumber,
               callerName,
@@ -98,16 +108,20 @@ const LookupResultDisplay = ({ result }) => {
               valid: result.valid,
             }),
           });
+
         } catch (error) {
           console.error('Failed to save search history:', error);
-        }  finally {
+        } finally {
           setLoading(false);
         }
+      } else {
+        setLoading(false);
       }
-    };
-
+    }
     saveToDatabase();
   }, [result]);
+
+
 
   if (!result) return null;
 

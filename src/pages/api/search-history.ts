@@ -1,25 +1,31 @@
-// pages/api/search-history.ts
 import { NextApiRequest, NextApiResponse } from 'next';
-import { prisma } from '../../lib/prisma';
-// import { getServerSession } from 'next-auth/next';
-// import { authOptions } from '../../lib/auth';
+import { getServerSession } from 'next-auth';
+import { authOptions } from './auth/[...nextauth]'; // Adjust the path as needed
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  // const session = await getServerSession(req, res, authOptions);
-
-  // if (!session?.user?.id) {
-  //   res.status(401).json({ error: 'Unauthorized' });
-  //   return;
-  // }
-
   try {
-    const searchHistory = await prisma.searchHistory.findMany({
-      // where: { userId: session.user.id },
-      where: { userId: 1 },
-      orderBy: { searchTimestamp: 'desc' },
+    const session = await getServerSession(req, res, authOptions);
+
+    if (!session?.user?.id) {
+      console.error('Unauthorized')
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    const searchHistories = await prisma.searchHistory.findMany({
+      where: {
+        userId: session.user.id,
+      },
+      orderBy: {
+        searchTimestamp: 'desc'
+      }
     });
-    res.status(200).json(searchHistory);
+
+    res.status(200).json(searchHistories);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch search history' });
+    console.error('Error fetching search history:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 }

@@ -1,42 +1,43 @@
-import type { Metadata } from 'next'
-import { PropsWithChildren } from 'react'
+import type { Metadata } from 'next';
+import { PropsWithChildren } from 'react';
+import { ThemeProvider } from 'next-themes';
 
-import { ThemeProvider } from 'next-themes'
-
-import Header from './header'
-import './global.css'
+import Header from './header';
+import './global.css';
+import SessionProviderWrapper from './session-provider-wrapper';
 
 export const metadata: Metadata = {
   title: 'WhoDiss',
   description: "Quickly and easily discover out who's texting you",
-  icons: { icon: "../../public/favicon.ico" }
-}
+  icons: { icon: "../../public/favicon.ico" },
+};
 
-import { Libre_Franklin } from 'next/font/google'
- 
+import { Libre_Franklin } from 'next/font/google';
+
 // If loading a variable font, you don't need to specify the font weight
 const noto = Libre_Franklin({
   subsets: ['latin'],
-  display: 'swap'
-})
+  display: 'swap',
+});
 
 const RootLayout = (props: PropsWithChildren) => {
-  const { children } = props
+  const { children } = props;
   return (
     <html lang="en" className={noto.className} suppressHydrationWarning>
       <body className="bg-canvas dark:bg-dark text-dark dark:text-light">
         <ThemeProvider attribute="class">
-          <div className="">
-            <Header />
-            <div className="flex flex-col sm:justify-center sm:items-center pt-36 px-4">
-              {children}
+          <SessionProviderWrapper>
+            <div>
+              <Header />
+              <div className="flex flex-col sm:justify-center sm:items-center pt-36 px-4">
+                {children}
+              </div>
             </div>
-
-          </div>
+          </SessionProviderWrapper>
         </ThemeProvider>
       </body>
     </html>
-  )
-}
+  );
+};
 
-export default RootLayout
+export default RootLayout;

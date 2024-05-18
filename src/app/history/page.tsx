@@ -2,6 +2,7 @@
 
 // /history/page.tsx
 import { useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
 import { PhoneCallIcon, ContactIcon, MessageSquareTextIcon, LoaderCircleIcon } from 'lucide-react';
 
 type SearchHistory = {
@@ -67,6 +68,7 @@ export default function HistoryPage() {
   const [searchHistory, setSearchHistory] = useState<SearchHistory[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const { data: session } = useSession();
 
   useEffect(() => {
     const fetchSearchHistory = async () => {
@@ -84,9 +86,14 @@ export default function HistoryPage() {
         setLoading(false);
       }
     };
-
-    fetchSearchHistory();
+    if (session) {
+      fetchSearchHistory();
+    }
   }, []);
+
+  if (!session) {
+    return <p>You must be logged in.</p>;
+  }
 
   if (loading) {
     return (

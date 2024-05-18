@@ -10,7 +10,7 @@ function PhoneNumberSearch() {
   const [lookupResult, setLookupResult] = useState(null);
   const searchInputRef = useRef<HTMLInputElement | null>(null);
 
- const fetchData = async (phoneNumber, callback) => {
+  const fetchData = async (phoneNumber, callback) => {
     try {
       const response = await fetch('/api/lookup', {
         method: 'POST',
