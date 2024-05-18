@@ -165,36 +165,36 @@ const LookupResultDisplay = ({ result }) => {
 
   return (
     <>
-      <div className="my-16 border p-6 rounded-lg shadow-lg sm:w-full max-w-4xl">
-        <div className="flex flex-col sm:flex-row gap-6 sm:gap-12 md:gap-18 w-full">
-          <div className="sm:w-1/2">
-            <h2 className="text-3xl font-bold">{formattedNumber}</h2>
+        <div className="my-16 border p-6 rounded-lg shadow-lg sm:w-full max-w-4xl">
+          <div className="flex flex-col sm:flex-row gap-6 sm:gap-12 md:gap-18 w-full">
+            <div className="sm:w-1/2">
+              <h2 className="text-3xl font-bold">{formattedNumber}</h2>
 
-            <h2 className="font-light mt-4 uppercase">Caller Name</h2>
-            <h3 className="text-2xl">{callerName}</h3>
+              <h2 className="font-light mt-4 uppercase">Caller Name</h2>
+              <h3 className="text-2xl">{callerName}</h3>
 
-            <h2 className="font-light mt-4 uppercase">Caller Type</h2>
-            <h3 className="text-2xl">{callerType}</h3>
+              <h2 className="font-light mt-4 uppercase">Caller Type</h2>
+              <h3 className="text-2xl">{callerType}</h3>
 
-            <h2 className="font-light mt-4 uppercase">Carrier Name</h2>
-            <h3 className="text-2xl">{carrierName}</h3>
+              <h2 className="font-light mt-4 uppercase">Carrier Name</h2>
+              <h3 className="text-2xl">{carrierName}</h3>
 
-            <h2 className="font-light mt-4 uppercase">Line Type</h2>
-            <h3 className="text-2xl">{lineType}</h3>
-            <p className="sm:max-w-xs">{lineTypeDescription}</p>
+              <h2 className="font-light mt-4 uppercase">Line Type</h2>
+              <h3 className="text-2xl">{lineType}</h3>
+              <p className="sm:max-w-xs">{lineTypeDescription}</p>
+            </div>
+
+            <div className="sm:w-1/2">
+                <button className={`${sharedButtonClasses}`} onClick={() => downloadVCard({ name: callerName , phone: phoneNumber })}>
+                  <ContactIcon className="mr-2" />
+                  Save to Contacts
+                </button>
+                <PhoneLink phoneNumber={phoneNumber} formattedNumber={formattedNumber} type="tel" />
+                <PhoneLink phoneNumber={phoneNumber} formattedNumber={formattedNumber} type="sms" />
+            </div>
+
           </div>
-
-          <div className="sm:w-1/2">
-              <button className={`${sharedButtonClasses}`} onClick={() => downloadVCard({ name: callerName , phone: phoneNumber })}>
-                <ContactIcon className="mr-2" />
-                Save to Contacts
-              </button>
-              <PhoneLink phoneNumber={phoneNumber} formattedNumber={formattedNumber} type="tel" />
-              <PhoneLink phoneNumber={phoneNumber} formattedNumber={formattedNumber} type="sms" />
-          </div>
-
         </div>
-      </div>
     </>
   );
 };

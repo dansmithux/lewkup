@@ -20,7 +20,7 @@ const Header = () => {
   					</div>
   					
   					<div className="flex items-center">
-  						<Balance />
+  						{/*<Balance />*/}
   						<ThemeSwitch size="lg" />
 						<MainMenu size="lg"
 						/>

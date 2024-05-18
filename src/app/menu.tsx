@@ -38,17 +38,6 @@ const MainMenu = (props: Menu.RootProps) => {
           <Menu.ItemGroup id="group-1">
             
 
-            { !session ? (
-              <>
-              </>
-            ) : (
-              <>
-                <Menu.ItemGroupLabel htmlFor="">Hi, {session?.user?.name}</Menu.ItemGroupLabel>
-                <Menu.Separator />
-              </>
-            )}
-            
-
             <Menu.Item id="search" onClick={() => router.push('/')}>
               <SearchIcon className="mr-2" /> Search
             </Menu.Item>
@@ -58,22 +47,32 @@ const MainMenu = (props: Menu.RootProps) => {
             </Menu.Item>
             
             <Menu.Item id="buy" onClick={() => router.push('/credits')}>
-              <CirclePlusIcon className="mr-2" /> Buy credits
+              <CirclePlusIcon className="mr-2" /> Buy Credits
             </Menu.Item>
 
             <Menu.Separator />
+
+            { !session ? (
+              <>
+              </>
+            ) : (
+              <>
+                <Menu.ItemGroupLabel htmlFor="">Hi, {session?.user?.name}</Menu.ItemGroupLabel>
+              </>
+            )}
+            
             
             { !session ? (
               <>
                 <Menu.Item id="login" onClick={() => signIn('google')}>
-                    Log in with Google
+                    Log In with Google
                 </Menu.Item>
               </>
             ) : (
               <>
                 <Menu.Item id="logout" onClick={() => signOut()}>
                   <LogOutIcon className="mr-2" />
-                  Log out
+                  Log Out
                 </Menu.Item>
               </>
             )}

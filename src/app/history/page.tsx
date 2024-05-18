@@ -3,10 +3,10 @@
 // /history/page.tsx
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { PhoneCallIcon, ContactIcon, MessageSquareTextIcon, LoaderCircleIcon } from 'lucide-react';
+import { PhoneCallIcon, ContactIcon, MessageSquareTextIcon, LoaderCircleIcon, Trash2Icon } from 'lucide-react';
 
 type SearchHistory = {
-  id: number;
+  id: string;
   phoneNumber: string;
   formattedNumber: string;
   callerName: string;
@@ -86,14 +86,29 @@ export default function HistoryPage() {
         setLoading(false);
       }
     };
-    // if (session) {
-      fetchSearchHistory();
-    // }
+    fetchSearchHistory();
   }, []);
 
-  if (!session) {
-    return <p>You must be logged in.</p>;
-  }
+
+  const deleteHistoryEntry = async (id: string) => {
+    try {
+      const response = await fetch('/api/delete-search-history', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id }),
+      });
+
+      if (response.ok) {
+        setSearchHistory(searchHistory.filter(entry => entry.id !== id));
+      } else {
+        setError('Failed to delete search history entry');
+      }
+    } catch (err) {
+      setError('Failed to delete search history entry');
+    }
+  };
 
   if (loading) {
     return (
@@ -105,6 +120,10 @@ export default function HistoryPage() {
         </div>
       </>
     );
+  }
+
+  if (!loading && !session) {
+    return <p>You must be logged in.</p>;
   }
 
   if (error) {
@@ -132,7 +151,6 @@ export default function HistoryPage() {
 
   return (
     <>
-      <section>
         {searchHistory.map((entry) => (
           <div className="mb-12 border p-6 rounded-lg shadow-lg sm:w-full max-w-4xl" key={entry.id}>
             <div className="flex flex-col sm:flex-row gap-6 sm:gap-12 md:gap-18 w-full">
@@ -153,18 +171,21 @@ export default function HistoryPage() {
                 <p className="sm:max-w-xs">{lineTypeDescriptions[entry.lineTypeId]}</p>
               </div>
 
-              <div className="sm:w-1/2">
+              <div className="sm:w-1/2 relative">
                 <button className={`${sharedButtonClasses}`} onClick={() => downloadVCard({ name: entry.callerName , phone: entry.phoneNumber })}>
                   <ContactIcon className="mr-2" />
                   Save to Contacts
                 </button>
                 <PhoneLink phoneNumber={entry.phoneNumber} formattedNumber={entry.formattedNumber} type="tel" />
                 <PhoneLink phoneNumber={entry.phoneNumber} formattedNumber={entry.formattedNumber} type="sms" />
+                <button className={`${sharedButtonClasses} mt-4`} onClick={() => deleteHistoryEntry(entry.id)}>
+                  <Trash2Icon className="mr-2" />
+                  Delete Entry
+                </button>
               </div>
             </div>
           </div>
         ))}
-      </section>
     </>
   );
 }
