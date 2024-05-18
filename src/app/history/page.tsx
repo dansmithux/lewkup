@@ -86,9 +86,9 @@ export default function HistoryPage() {
         setLoading(false);
       }
     };
-    if (session) {
+    // if (session) {
       fetchSearchHistory();
-    }
+    // }
   }, []);
 
   if (!session) {

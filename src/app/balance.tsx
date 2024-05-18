@@ -8,7 +8,7 @@ const Balance = (props: ButtonProps) => {
 
     return (
         <>
-            <Button variant="ghost" size="xs" className="rounded-full" onClick={() => router.push('/buy')}>
+            <Button variant="ghost" size="xs" className="rounded-full" onClick={() => router.push('/credits')}>
                 2 credits
             </Button>
         </>

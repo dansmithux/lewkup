@@ -1,5 +1,7 @@
 'use client'
 
+import { signIn, signOut, useSession } from 'next-auth/react';
+
 import { Button } from '~/components/ui/button'
 import * as Text from '~/components/ui/text'
 import * as Menu from '~/components/ui/menu'
@@ -22,6 +24,7 @@ import {
 
 const MainMenu = (props: Menu.RootProps) => {
   const router = useRouter()
+  const { data: session } = useSession();
 
   return (
     <Menu.Root {...props}>
@@ -33,20 +36,48 @@ const MainMenu = (props: Menu.RootProps) => {
       <Menu.Positioner>
         <Menu.Content>
           <Menu.ItemGroup id="group-1">
+            
+
+            { !session ? (
+              <>
+              </>
+            ) : (
+              <>
+                <Menu.ItemGroupLabel htmlFor="">Hi, {session?.user?.name}</Menu.ItemGroupLabel>
+                <Menu.Separator />
+              </>
+            )}
+            
+
             <Menu.Item id="search" onClick={() => router.push('/')}>
               <SearchIcon className="mr-2" /> Search
             </Menu.Item>
+
             <Menu.Item id="history" onClick={() => router.push('/history')}>
               <HistoryIcon className="mr-2" /> History
             </Menu.Item>
-            <Menu.Item id="buy" onClick={() => router.push('/buy')}>
+            
+            <Menu.Item id="buy" onClick={() => router.push('/credits')}>
               <CirclePlusIcon className="mr-2" /> Buy credits
             </Menu.Item>
+
             <Menu.Separator />
-            <Menu.Item id="logout" onClick={() => router.push('/login')}>
-                <LogOutIcon className="mr-2" />
-                Logout
-            </Menu.Item>
+            
+            { !session ? (
+              <>
+                <Menu.Item id="login" onClick={() => signIn('google')}>
+                    Log in with Google
+                </Menu.Item>
+              </>
+            ) : (
+              <>
+                <Menu.Item id="logout" onClick={() => signOut()}>
+                  <LogOutIcon className="mr-2" />
+                  Log out
+                </Menu.Item>
+              </>
+            )}
+
           </Menu.ItemGroup>
         </Menu.Content>
       </Menu.Positioner>
