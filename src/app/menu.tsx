@@ -17,7 +17,7 @@ import {
   SearchIcon,
   MenuIcon,
   ClockIcon,
-  CirclePlusIcon,
+  CoinsIcon,
   SunMoonIcon,
   SunIcon,
   MoonIcon,
@@ -49,7 +49,7 @@ const MainMenu = (props: Menu.RootProps) => {
             </Menu.Item>
             
             <Menu.Item id="buy" onClick={() => router.push('/credits')} className="sm:hidden font-semibold">
-              <CirclePlusIcon className="mr-2" /> Credits
+              <CoinsIcon className="mr-2" /> Credits
             </Menu.Item>
 
             <Menu.Separator className="sm:hidden" />
@@ -71,14 +71,14 @@ const MainMenu = (props: Menu.RootProps) => {
             { !session ? (
               <>
                 <Menu.Item id="login" className="font-semibold" onClick={() => signIn('google')}>
-                    Log In with Google
+                    Sign In with Google
                 </Menu.Item>
               </>
             ) : (
               <>
                 <Menu.Item id="logout" className="font-semibold" onClick={() => signOut()}>
                   <LogOutIcon className="mr-2" />
-                  Log Out
+                  Sign Out
                 </Menu.Item>
               </>
             )}

@@ -1,12 +1,10 @@
 'use client';
 
 import MainMenu from './menu'
-import Balance from './balance'
 import ThemeSwitch from './theme-switch';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation'
 import { Button } from '~/components/ui/button'
-import AuthButtons from "./auth-buttons";
 
 import {
   ChevronRightIcon,
@@ -16,7 +14,7 @@ import {
   SearchIcon,
   MenuIcon,
   ClockIcon,
-  CirclePlusIcon,
+  CoinsIcon,
   SunMoonIcon,
   SunIcon,
   MoonIcon,
@@ -47,7 +45,7 @@ const Header = () => {
 							<HistoryIcon className="" /> History
 	        			</Button>
 						<Button variant="ghost" size="md" className="text-sm hidden sm:flex" onClick={() => router.push('/credits')}>
-							<CirclePlusIcon className="" /> Credits
+							<CoinsIcon className="" /> Credits
       			</Button>
 						<MainMenu size="md"
 						/>

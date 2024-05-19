@@ -130,7 +130,7 @@ const LookupResultDisplay = ({ result }) => {
   if (loading) {
     return (
       <>
-        <div className="sm:w-full max-w-4xl">
+        <div className="sm:w-full max-w-3xl">
           <div className="flex justify-center">
             <LoaderCircleIcon className="flex animate-spin h-10 w-10 text-green-600 mt-12" />
           </div>
@@ -149,7 +149,7 @@ const LookupResultDisplay = ({ result }) => {
   const lineType = lineTypes[lineTypeId];
   const lineTypeDescription = lineTypeDescriptions[lineTypeId];
 
-  const sharedButtonClasses = "border-1 border-neutral-200 hover:border-neutral-900 dark:border-neutral-800 dark:hover:border-neutral-100 text-dark text-md font-medium px-4 py-3 border w-full flex"
+  const sharedButtonClasses = "button button--variant_outline button--size_lg w-full justify-start"
 
   const PhoneLink = ({ phoneNumber, formattedNumber, type }) => {
     return (
@@ -165,7 +165,7 @@ const LookupResultDisplay = ({ result }) => {
 
   return (
     <>
-        <div className="my-16 border p-6 rounded-lg shadow-lg sm:w-full max-w-4xl">
+        <div className="my-16 border p-6 rounded-lg shadow-lg sm:w-full max-w-3xl hover:shadow-xl transition">
           <div className="flex flex-col sm:flex-row gap-6 sm:gap-12 md:gap-18 w-full">
             <div className="sm:w-1/2">
               <h2 className="text-3xl font-bold">{formattedNumber}</h2>

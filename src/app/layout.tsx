@@ -24,7 +24,7 @@ const RootLayout = (props: PropsWithChildren) => {
   const { children } = props;
   return (
     <html lang="en" className={noto.className} suppressHydrationWarning>
-      <body className="bg-canvas dark:bg-dark text-dark dark:text-light">
+      <body className="bg-neutral-100 dark:bg-neutral-900 text-dark dark:text-light">
         <ThemeProvider attribute="class">
           <SessionProviderWrapper>
             <div>

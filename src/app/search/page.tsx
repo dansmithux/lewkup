@@ -7,12 +7,14 @@ import LookupResultDisplay from '../result';
 
 // `phoneNumber` will be the parsed phone number in E.164 format. Example: "+12133734253".
 function PhoneNumberSearch() {
-
   const [phoneNumber, setPhoneNumber] = useState('');
   const [lookupResult, setLookupResult] = useState(null);
+  const [loading, setLoading] = useState(false);
+
   const searchInputRef = useRef<HTMLInputElement | null>(null);
 
   const fetchData = async (phoneNumber, callback) => {
+    setLoading(true);
     try {
       const response = await fetch('/api/lookup', {
         method: 'POST',
@@ -25,13 +27,15 @@ function PhoneNumberSearch() {
       if (response.ok) {
         const data = await response.json();
         console.log(data);
-
+        setLoading(false);
         callback(null, data); // Call the callback with no error and the data
       } else {
         throw new Error('Failed to fetch');
+        setLoading(false);
       }
     } catch (error) {
       callback(error, null); // Call the callback with error
+      setLoading(false);
     }
   };
 
@@ -76,7 +80,7 @@ function PhoneNumberSearch() {
 
   return (
     <>
-        <div className="flex flex-col md:flex-row justify-center items-center">
+        <div className=" sm:w-full max-w-3xl">
           <form onSubmit={handleSearch} autoComplete="off">
 
             <PatternFormat
@@ -91,7 +95,7 @@ function PhoneNumberSearch() {
               type="tel"
               getInputRef={searchInputRef}
             />
-            <Button variant="solid" size="2xl" className="w-full mt-2" type="submit">
+            <Button variant="solid" size="2xl" className="w-full mt-6" type="submit" disabled={loading}>
               Search
             </Button>
           </form>

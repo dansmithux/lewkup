@@ -1,8 +1,10 @@
 'use client';
 
-// /history/page.tsx
 import { useEffect, useState } from 'react';
-import { useSession } from 'next-auth/react';
+import { signIn, signOut, useSession } from 'next-auth/react';
+import { Input } from '~/components/ui/input';
+import { Button } from '~/components/ui/button';
+
 import { PhoneCallIcon, ContactIcon, MessageSquareTextIcon, LoaderCircleIcon, Trash2Icon } from 'lucide-react';
 
 type SearchHistory = {
@@ -67,7 +69,9 @@ const lineTypeDescriptions = {
 export default function HistoryPage() {
   const [searchHistory, setSearchHistory] = useState<SearchHistory[]>([]);
   const [loading, setLoading] = useState(true);
+  const [deleting, setDeleting] = useState(false);
   const [error, setError] = useState('');
+  const [filterText, setFilterText] = useState('');
   const { data: session } = useSession();
 
   useEffect(() => {
@@ -89,8 +93,8 @@ export default function HistoryPage() {
     fetchSearchHistory();
   }, []);
 
-
   const deleteHistoryEntry = async (id: string) => {
+    setDeleting(true);
     try {
       const response = await fetch('/api/delete-search-history', {
         method: 'DELETE',
@@ -101,19 +105,22 @@ export default function HistoryPage() {
       });
 
       if (response.ok) {
+        setDeleting(false);
         setSearchHistory(searchHistory.filter(entry => entry.id !== id));
       } else {
         setError('Failed to delete search history entry');
+        setDeleting(false);
       }
     } catch (err) {
       setError('Failed to delete search history entry');
+      setDeleting(false);
     }
   };
 
   if (loading) {
     return (
       <>
-        <div className="sm:w-full max-w-4xl">
+        <div className="sm:w-full max-w-3xl">
           <div className="flex justify-center">
             <LoaderCircleIcon className="animate-spin h-10 w-10 text-green-600" />
           </div>
@@ -123,7 +130,12 @@ export default function HistoryPage() {
   }
 
   if (!loading && !session) {
-    return <p>You must be logged in.</p>;
+    return (
+      <>
+        <h2 className="text-xl">You must be logged in to view your search history.</h2>
+        <Button className="mt-8" size="xl" onClick={() => signIn('google')}>Sign in with Google</Button>
+      </>
+    )
   }
 
   if (error) {
@@ -133,8 +145,12 @@ export default function HistoryPage() {
   if (searchHistory.length === 0) {
     return <p>You have no search history yet.</p>;
   }
-  
-  const sharedButtonClasses = "border-1 border-neutral-200 hover:border-neutral-900 dark:border-neutral-800 dark:hover:border-neutral-100 text-dark text-md font-medium px-4 py-3 border w-full flex"
+
+  const filteredHistory = searchHistory.filter(entry =>
+    entry.phoneNumber.includes(filterText) || entry.callerName.toLowerCase().includes(filterText.toLowerCase())
+  );
+
+  const sharedButtonClasses = "button button--variant_outline button--size_lg w-full justify-start";
 
   const PhoneLink = ({ phoneNumber, formattedNumber, type }) => {
     return (
@@ -148,11 +164,21 @@ export default function HistoryPage() {
     );
   };
 
-
   return (
     <>
-        {searchHistory.map((entry) => (
-          <div className="mb-12 border p-6 rounded-lg shadow-lg sm:w-full max-w-4xl" key={entry.id}>
+      <div className="mb-10 sm:w-full max-w-3xl">
+        <Input
+          type="text"
+          placeholder="Filter by phone number or name"
+          value={filterText}
+          onChange={(e) => setFilterText(e.target.value)}
+          size="2xl"
+          className="px-4"
+        />
+      </div>
+      <section>
+        {filteredHistory.map((entry) => (
+          <div className="mb-10 border p-6 rounded-lg shadow-lg sm:w-full max-w-3xl hover:shadow-xl transition" key={entry.id}>
             <div className="flex flex-col sm:flex-row gap-6 sm:gap-12 md:gap-18 w-full">
               <div className="sm:w-1/2">
                 <h2 className="text-3xl font-bold">{entry.formattedNumber}</h2>
@@ -178,14 +204,15 @@ export default function HistoryPage() {
                 </button>
                 <PhoneLink phoneNumber={entry.phoneNumber} formattedNumber={entry.formattedNumber} type="tel" />
                 <PhoneLink phoneNumber={entry.phoneNumber} formattedNumber={entry.formattedNumber} type="sms" />
-                <button className={`${sharedButtonClasses} mt-4`} onClick={() => deleteHistoryEntry(entry.id)}>
-                  <Trash2Icon className="mr-2" />
-                  Delete Entry
+                <button className="button button--variant_outline sm:border-0 button--size_lg justify-start inline-flex mt-4 sm:absolute sm:bottom-0 sm:right-0 w-full sm:w-auto" onClick={() => deleteHistoryEntry(entry.id)} disabled={deleting}>
+                  <Trash2Icon className="mr-2 sm:mr-0" />
+                  <span className="sm:hidden">Delete entry</span>
                 </button>
               </div>
             </div>
           </div>
         ))}
+      </section>
     </>
   );
 }
