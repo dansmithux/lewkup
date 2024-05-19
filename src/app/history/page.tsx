@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { Input } from '~/components/ui/input';
 import { Button } from '~/components/ui/button';
+import { useRouter } from 'next/navigation'
 
 import { PhoneCallIcon, ContactIcon, MessageSquareTextIcon, LoaderCircleIcon, Trash2Icon } from 'lucide-react';
 
@@ -73,6 +74,7 @@ export default function HistoryPage() {
   const [error, setError] = useState('');
   const [filterText, setFilterText] = useState('');
   const { data: session } = useSession();
+  const router = useRouter()
 
   useEffect(() => {
     const fetchSearchHistory = async () => {
@@ -212,6 +214,13 @@ export default function HistoryPage() {
             </div>
           </div>
         ))}
+        { filteredHistory.length === 0 && filterText.length > 0
+        ? <div className="sm:w-full max-w-3xl text-center">
+            <h2 className="text-xl">No results found in history. Try running a new search instead.</h2>
+            <Button size="xl" className="mt-8" onClick={() => router.push('/search')}>New Search</Button>
+          </div>
+        : "" }
+
       </section>
     </>
   );

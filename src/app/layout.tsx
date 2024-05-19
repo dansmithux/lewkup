@@ -7,8 +7,8 @@ import './global.css';
 import SessionProviderWrapper from './session-provider-wrapper';
 
 export const metadata: Metadata = {
-  title: 'WhoDiss',
-  description: "Quickly and easily discover out who's texting you",
+  title: 'Lewk.App',
+  description: "Quickly and easily discover who's texting you",
   icons: { icon: "../../public/favicon.ico" },
 };
 

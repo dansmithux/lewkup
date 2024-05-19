@@ -97,9 +97,9 @@ export default function CreditBalancePage() {
 
         <div className="sm:w-1/2">
           <div className="text-center border-b sm:border-b-0 pb-10 sm:pb-0 sm:border-r sm:pr-100">
-            <h2 className="text-md font-light mb-8 uppercase">Balance</h2>
+            <h2 className="text-md font-light mb-7 uppercase">Balance</h2>
             <p className="text-6xl mb-1 font-bold">{ balance !== null ? balance : "0 "}</p>
-            <p className="text-lg">Credits</p>
+            <p className="text-lg font-medium">Credits</p>
           </div>
         </div>
 
