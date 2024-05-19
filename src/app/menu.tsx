@@ -1,5 +1,7 @@
 'use client'
 
+import Link from 'next/link'
+import Image from 'next/image'
 import { signIn, signOut, useSession } from 'next-auth/react';
 
 import { Button } from '~/components/ui/button'
@@ -27,7 +29,7 @@ const MainMenu = (props: Menu.RootProps) => {
   const { data: session } = useSession();
 
   return (
-    <Menu.Root {...props}>
+    <Menu.Root {...props} size="lg">
       <Menu.Trigger asChild>
         <Button variant="ghost" size={props.size}>
           <MenuIcon />
@@ -38,39 +40,43 @@ const MainMenu = (props: Menu.RootProps) => {
           <Menu.ItemGroup id="group-1">
             
 
-            <Menu.Item id="search" onClick={() => router.push('/')}>
+            <Menu.Item id="search" onClick={() => router.push('/search')} className="sm:hidden font-semibold">
               <SearchIcon className="mr-2" /> Search
             </Menu.Item>
 
-            <Menu.Item id="history" onClick={() => router.push('/history')}>
+            <Menu.Item id="history" onClick={() => router.push('/history')} className="sm:hidden font-semibold">
               <HistoryIcon className="mr-2" /> History
             </Menu.Item>
             
-            <Menu.Item id="buy" onClick={() => router.push('/credits')}>
-              <CirclePlusIcon className="mr-2" /> Buy Credits
+            <Menu.Item id="buy" onClick={() => router.push('/credits')} className="sm:hidden font-semibold">
+              <CirclePlusIcon className="mr-2" /> Credits
             </Menu.Item>
 
-            <Menu.Separator />
+            <Menu.Separator className="sm:hidden" />
 
             { !session ? (
               <>
               </>
             ) : (
               <>
-                <Menu.ItemGroupLabel htmlFor="">Hi, {session?.user?.name}</Menu.ItemGroupLabel>
+                <Menu.ItemGroupLabel htmlFor="">
+                  <Image width={20} height={20} src={session?.user?.image} alt="" className="inline mr-2 rounded-full" />
+                  <span className="align-middle font-semibold">{session?.user?.name}</span>
+                </Menu.ItemGroupLabel>
+                
               </>
             )}
             
             
             { !session ? (
               <>
-                <Menu.Item id="login" onClick={() => signIn('google')}>
+                <Menu.Item id="login" className="font-semibold" onClick={() => signIn('google')}>
                     Log In with Google
                 </Menu.Item>
               </>
             ) : (
               <>
-                <Menu.Item id="logout" onClick={() => signOut()}>
+                <Menu.Item id="logout" className="font-semibold" onClick={() => signOut()}>
                   <LogOutIcon className="mr-2" />
                   Log Out
                 </Menu.Item>

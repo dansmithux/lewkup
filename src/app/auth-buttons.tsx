@@ -1,6 +1,7 @@
 'use client';
 
 import { signIn, signOut, useSession } from 'next-auth/react';
+import Image from 'next/image'
 
 export default function AuthButtons() {
   const { data: session } = useSession();
@@ -13,7 +14,7 @@ export default function AuthButtons() {
       ) : (
         <>
           <button onClick={() => signOut()}>Sign out</button>
-          <p>Welcome, {session?.user?.name}</p>
+          <p>Hi, {session?.user?.name}</p>
         </>
       )}
     </div>

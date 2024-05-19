@@ -1,7 +1,9 @@
+'use client';
+
 import { useState, useRef } from 'react';
 import { PatternFormat } from 'react-number-format';
 import { Button } from '~/components/ui/button'
-import LookupResultDisplay from './result';
+import LookupResultDisplay from '../result';
 
 // `phoneNumber` will be the parsed phone number in E.164 format. Example: "+12133734253".
 function PhoneNumberSearch() {
