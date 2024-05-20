@@ -33,7 +33,7 @@ const Header = () => {
   					<div className="min-w-0">
 
 	  					<Button variant="ghost" size="md" className="text-lg" onClick={() => router.push('/')}>
-	          				Lewk.App
+	          				LewkApp
 	        			</Button>
   						<ThemeSwitch size="md" />
   					</div>
