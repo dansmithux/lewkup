@@ -41,6 +41,7 @@ model Credits {
   id           Int      @id @default(autoincrement())
   userId       String
   credits      Int
+  price        Int      @default(0)
   purchaseDate DateTime @default(now())
   user         User     @relation(fields: [userId], references: [id])
 }

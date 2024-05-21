@@ -174,7 +174,7 @@ export default function HistoryPage() {
           placeholder="Filter by phone number or name"
           value={filterText}
           onChange={(e) => setFilterText(e.target.value)}
-          size="2xl"
+          size="xl"
           className="px-4"
         />
       </div>
@@ -185,16 +185,16 @@ export default function HistoryPage() {
               <div className="sm:w-1/2">
                 <h2 className="text-3xl font-bold">{entry.formattedNumber}</h2>
 
-                <h2 className="font-light mt-4 uppercase">Caller Name</h2>
+                <h2 className="font-light tracking-wide mt-4 uppercase">Caller Name</h2>
                 <h3 className="text-2xl">{entry.callerName}</h3>
 
-                <h2 className="font-light mt-4 uppercase">Caller Type</h2>
+                <h2 className="font-light tracking-wide mt-4 uppercase">Caller Type</h2>
                 <h3 className="text-2xl">{entry.callerType}</h3>
 
-                <h2 className="font-light mt-4 uppercase">Carrier Name</h2>
+                <h2 className="font-light tracking-wide mt-4 uppercase">Carrier Name</h2>
                 <h3 className="text-2xl">{entry.carrierName}</h3>
 
-                <h2 className="font-light mt-4 uppercase">Line Type</h2>
+                <h2 className="font-light tracking-wide mt-4 uppercase">Line Type</h2>
                 <h3 className="text-2xl">{lineTypes[entry.lineTypeId]}</h3>
                 <p className="sm:max-w-xs">{lineTypeDescriptions[entry.lineTypeId]}</p>
               </div>

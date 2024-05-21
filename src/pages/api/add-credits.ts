@@ -3,16 +3,19 @@ import { getServerSession } from 'next-auth/next';
 import { authOptions } from './auth/[...nextauth]'; // Adjust the path as needed
 import { PrismaClient } from '@prisma/client';
 
+// import {loadStripe} from '@stripe/stripe-js';
+
 const prisma = new PrismaClient();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions);
+  // const stripe = await loadStripe(process.env.STRIPE_SECRET);
 
   if (!session) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
-  const { quantity } = req.body;
+  const { quantity, price } = req.body;
 
   if (!quantity || typeof quantity !== 'number') {
     return res.status(400).json({ error: 'Invalid quantity' });
@@ -33,6 +36,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       data: {
         userId: session.user.id,
         credits: quantity,
+        price: price,
       },
     });
 
