@@ -93,6 +93,7 @@ function PhoneNumberSearch() {
               onPaste={handlePaste}
               valueIsNumericString={true}
               type="tel"
+              autoFocus
               getInputRef={searchInputRef}
             />
             <Button variant="solid" size="2xl" className="w-full mt-6" type="submit" disabled={loading}>
