@@ -10,6 +10,15 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/search',
+        permanent: true, // This makes the redirect permanent (HTTP 301)
+      },
+    ]
+  },
 }
 
 module.exports = nextConfig

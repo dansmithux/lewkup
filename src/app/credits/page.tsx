@@ -73,7 +73,14 @@ export default function CreditBalancePage() {
     fetchCreditPurchaseHistory();
   }, []);
 
-
+  function formatNumberWithCommas(number) {
+    if (isNaN(number)) {
+      return null;
+    }
+    const [integerPart, decimalPart] = number.toString().split('.');
+    const formattedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return decimalPart ? `${formattedInteger}.${decimalPart}` : formattedInteger;
+  }
 
   const addCredits = async ( quantity, price ) => {
     try {
@@ -133,7 +140,7 @@ export default function CreditBalancePage() {
           <div className="sm:w-1/2">
             <div className="text-center border-b sm:border-b-0 pb-10 sm:pb-0 sm:border-r sm:pr-100">
               <h2 className="text-lg font-light mb-8 uppercase tracking-wide">Balance</h2>
-              <p className="text-6xl mb-1 font-bold">{ balance !== null ? balance : "0 "}</p>
+              <p className="text-6xl mb-1 font-bold">{ balance !== null ? formatNumberWithCommas(balance) : "0"}</p>
               <p className="text-lg font-medium">Credits</p>
             </div>
           </div>
